@@ -41,35 +41,35 @@
            <div class="control-group">
               <label class="control-label">Penghasilan Orang tua</label>
               <div class="controls">
-                <input type="text" name="c1" class="form-control" value="<?php echo $data->c1; ?>">
+                <input type="number" name="c1"  min="1" max="5" class="form-control" value="<?php echo $data->c1; ?>">
               </div>
             </div>
 
              <div class="control-group">
               <label class="control-label">Jumlah Tanggungan Orang tua</label>
               <div class="controls">
-                <input type="text" name="c2" class="form-control" value="<?php echo $data->c2; ?>">
+                <input type="number" name="c2"  min="1" max="5" class="form-control" value="<?php echo $data->c2; ?>">
               </div>
             </div>
 
            <div class="control-group">
               <label class="control-label">Jarak Rumah ke Sekolah</label>
               <div class="controls">
-                <input type="text" name="c3" class="form-control" value="<?php echo $data->c3; ?>">
+                <input type="number" name="c3"  min="1" max="5" class="form-control" value="<?php echo $data->c3; ?>">
               </div>
             </div>
 
            <div class="control-group">
               <label class="control-label">Nilai Akademik</label>
               <div class="controls">
-                <input type="text" name="c4" class="form-control" value="<?php echo $data->c4; ?>">
+                <input type="number" name="c4"  min="1" max="5" class="form-control" value="<?php echo $data->c4; ?>">
               </div>
             </div>
 
            <div class="control-group">
               <label class="control-label">Nilai Non Akademik</label>
               <div class="controls">
-                <input type="text" name="c5" class="form-control" value="<?php echo $data->c5; ?>">
+                <input type="number" name="c5"  min="1" max="5" class="form-control" value="<?php echo $data->c5; ?>">
               </div>
             </div>
 

@@ -42,35 +42,88 @@ class Kriteria extends CI_Controller {
 		$this->load->view('template/footer',$data);
 	}
 
-	public function proses_simpan(){
-		if(!$this->session->logged_in){
-			redirect("Login");
-		}
-		$nisn = addslashes($this->input->post("nisn"));
-        $c1 =  addslashes($this->input->post("c1"));
-        $c2 =  addslashes($this->input->post("c2"));
-        $c3 =  addslashes($this->input->post("c3"));
-        $c4 =  addslashes($this->input->post("c4"));
-        $c5 =  addslashes($this->input->post("c5"));
-        //$tahun =  addslashes($this->input->post("thn"));
-
-        $sql = "INSERT INTO tabel_kriteria values ('$nisn','$c1', '$c2', '$c3', '$c4', '$c5')";
-        $simpan = $this->db->query($sql);
-
-        if($simpan){
-        	redirect('Kriteria');
-        }
-    }
-
-	public function delete(){
-		if(!$this->session->logged_in){
-			redirect("Login");
-		}
-		$id = addslashes($this->input->get("id"));
-		$data_siswa = $this->db->query("DELETE from tabel_kriteria where nisn='$id'");
-		$this->session->set_flashdata("k", "<div class=\"alert alert-success\">Data has been deleted</div>");
-			redirect('Kriteria');
+public function proses_simpan(){
+	if(!$this->session->logged_in){
+		redirect("Login");
 	}
+
+	$this->db->db_debug = false;
+
+	$nisn = addslashes($this->input->post("nisn"));
+	$c1 = addslashes($this->input->post("c1"));
+	$c2 = addslashes($this->input->post("c2"));
+	$c3 = addslashes($this->input->post("c3"));
+	$c4 = addslashes($this->input->post("c4"));
+	$c5 = addslashes($this->input->post("c5"));
+
+	// Validasi hanya boleh angka 1–5
+	$valid = [$c1, $c2, $c3, $c4, $c5];
+	foreach($valid as $v){
+		if (!in_array($v, ['1','2','3','4','5'])) {
+			$data = [
+				'status' => 'error',
+				'message' => 'Semua nilai C1–C5 harus antara 1 sampai 5!'
+			];
+			$this->load->view('alert_redirect', $data);
+			return;
+		}
+	}
+
+	$sql = "INSERT INTO tabel_kriteria VALUES ('$nisn', '$c1', '$c2', '$c3', '$c4', '$c5')";
+	$simpan = $this->db->query($sql);
+
+	if (!$simpan) {
+		$db_error = $this->db->error();
+
+		if (strpos($db_error['message'], 'Duplicate') !== false) {
+			$data = [
+				'status' => 'error',
+				'message' => 'Data dengan NISN tersebut sudah ada!'
+			];
+		} else {
+			$data = [
+				'status' => 'error',
+				'message' => 'Terjadi kesalahan saat menyimpan data!'
+			];
+		}
+
+		$this->load->view('alert_redirect', $data);
+	} else {
+	$data = [
+		'status' => 'success',
+		'message' => 'Data berhasil disimpan!'
+	];
+	$this->load->view('alert_redirect', $data);
+}
+}
+
+
+
+public function delete(){
+	if(!$this->session->logged_in){
+		redirect("Login");
+	}
+
+	$this->db->db_debug = false;
+
+	$id = addslashes($this->input->get("id"));
+	$delete = $this->db->query("DELETE FROM tabel_kriteria WHERE nisn='$id'");
+
+	if (!$delete) {
+		$data = [
+			'status' => 'error',
+			'message' => 'Gagal menghapus data!'
+		];
+	} else {
+		$data = [
+			'status' => 'success',
+			'message' => 'Data berhasil dihapus!'
+		];
+	}
+
+	$this->load->view('alert_redirect', $data);
+}
+
 
 	public function edit() {
 		if(!$this->session->logged_in){
@@ -89,25 +142,29 @@ class Kriteria extends CI_Controller {
 		$this->load->view('template/footer',$data);
 	}
 
-	public function proses_edit(){
-		if(!$this->session->logged_in){
-			redirect("Login");
-		}
-		$nisn = addslashes($this->input->post("nisn"));
-        $id =  addslashes($this->input->post("nisn"));
-        $c1 =  addslashes($this->input->post("c1"));
-        $c2 =  addslashes($this->input->post("c2"));
-        $c3 =  addslashes($this->input->post("c3"));
-        $c4 =  addslashes($this->input->post("c4"));
-        $c5 =  addslashes($this->input->post("c5"));
-        //F$tahun =  addslashes($this->input->post("thn"));
-
-        $sql = "UPDATE tabel_kriteria set c1=$c1, c2=$c2, c3=$c3, c4=$c4, c5=$c5  where nisn='$id'";
-        $simpan = $this->db->query($sql);
-
-        if($simpan){
-        	redirect('Kriteria');
-        }
+public function proses_edit() {
+    if (!$this->session->logged_in) {
+        redirect("Login");
     }
+
+    $id = addslashes($this->input->post("nisn"));
+    $c1 = addslashes($this->input->post("c1"));
+    $c2 = addslashes($this->input->post("c2"));
+    $c3 = addslashes($this->input->post("c3"));
+    $c4 = addslashes($this->input->post("c4"));
+    $c5 = addslashes($this->input->post("c5"));
+
+    $sql = "UPDATE tabel_kriteria SET c1=$c1, c2=$c2, c3=$c3, c4=$c4, c5=$c5 WHERE nisn='$id'";
+    $simpan = $this->db->query($sql);
+
+    $data = [
+        'status' => $simpan ? 'success' : 'error',
+        'message' => $simpan ? 'Data berhasil diedit' : 'Gagal mengedit data',
+        'redirect' => base_url('Kriteria')
+    ];
+
+    $this->load->view('alert_redirect', $data);
+}
+
 
 }

@@ -3,6 +3,38 @@
     
     <!-- Content Header (Page header) -->
     <section class="content-header">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const url = this.getAttribute('data-url');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+});
+</script>
+
       <h1>
         Data Siswa
       </h1>
@@ -46,8 +78,13 @@
          <td><?php echo $row->jenis_kelamin; ?></td>
 
          <td>
-         <?php echo '<a href="Siswa/delete?nisn=' . $row->nisn . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"><i class="fa fa-trash"></i></a>'; ?>
-          <?php echo "<a href=Siswa/edit?nisn=$row->nisn class='btn btn-sm btn-info'><i class='fa fa-edit'></i></a>" ?>
+<?php
+echo '<a href="Siswa/delete?nisn=' . $row->nisn . '" class="btn btn-sm btn-danger btn-delete" data-url="' . base_url('Siswa/delete?nisn=' . $row->nisn) . '">
+    <i class="fa fa-trash"></i>
+</a>';
+?>
+
+         <?php echo "<a href=Siswa/edit?nisn=$row->nisn class='btn btn-sm btn-info'><i class='fa fa-edit'></i></a>" ?>
          </td>
                 </tr>
                 <?php

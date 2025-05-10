@@ -61,16 +61,15 @@
             <i class="fa fa-bookmark"></i> <span>Data Kriteria</span>
           </a>
         </li>
-         <li <?php if($page=="perhitungan"){ echo "class='active'"; } ?>>
-          <a href="<?php echo $base_url; ?>Hitung">
-            <i class="fa fa-calendar"></i> <span>Perhitungan <i>MOORA</i></span>
-          </a>
-        </li>
         <li <?php if($page=="perhitungan_aras"){ echo "class='active'"; } ?>>
           <a href="<?php echo $base_url; ?>Aras">
             <i class="fa fa-calendar"></i> <span>Perhitungan <i>ARAS</i></span>
           </a>
         </li>
+         <li <?php if($page=="perhitungan"){ echo "class='active'"; } ?>>
+          <a href="<?php echo $base_url; ?>Hitung">
+            <i class="fa fa-calendar"></i> <span>Perhitungan <i>MOORA</i></span>
+          </a>
         <li <?php if($page=="laporan"){ echo "class='active'"; } ?>>
           <a href="<?php echo $base_url; ?>Laporan">
             <i class="fa fa-book"></i> <span>Hasil Perhitungan</span>

@@ -3,6 +3,21 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+<!-- Include SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<?php if ($this->session->flashdata('alert')): ?>
+<script>
+    Swal.fire({
+        icon: '<?= $this->session->flashdata('alert')['type'] ?>',
+        title: '<?= $this->session->flashdata('alert')['message'] ?>',
+        showConfirmButton: true
+    });
+</script>
+<?php endif; ?>
+
+
+
         Edit Bobot Kriteria
       </h1>
     </section>
@@ -55,7 +70,7 @@
             <br>
             <div class="form-actions">
               <button type="submit" name="simpan" value="Simpan" class="btn btn-success">Simpan</button>
-        <button type="reset" name="reset" value="reset" class="btn btn-danger">Reset</button>
+              <button type="button" onclick="history.back()" class="btn btn-danger">Kembali</button>
             </div>
           </form>
       <?php
