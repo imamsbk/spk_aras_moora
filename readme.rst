@@ -2,6 +2,8 @@
 What is CodeIgniter
 ###################
 
+CI 3 + php 7.3 + xampp v3.3.0
+
 CodeIgniter is an Application Development Framework - a toolkit - for people
 who build web sites using PHP. Its goal is to enable you to develop projects
 much faster than you could if you were writing code from scratch, by providing
